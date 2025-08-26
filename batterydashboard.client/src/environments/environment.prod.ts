@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  authUrl: '/api',
+  deviceId: '23.32.003'
 };
