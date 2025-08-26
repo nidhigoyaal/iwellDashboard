@@ -1,0 +1,68 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Your variable overrides
+$primary: #007bff;
+$secondary: #6c757d;
+// more overrides...
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-image: url('assets/LoginPageBackground.png');
+  background-size: cover;        /* cover entire screen */
+  background-position: center;   /* center the image */
+  background-repeat: no-repeat;  /* prevent tiling */
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.apexcharts-legend-text {
+  fill: white !important;
+  color: white !important;
+  font-size: 15px !important;
+}
+
+.apexcharts-tooltip {
+  color: black !important;
+  font-size: 15px !important;
+
+}
+
+.apexcharts-xaxis text {
+  fill: white !important;
+  font-size: 15px !important;
+}
+
+.apexcharts-yaxis text {
+  fill: white !important;
+  font-size: 15px !important;
+}
+
+.apexcharts-menu {
+  background-color: #0f1117 !important; /* dark background */
+  color: #fff !important;               /* white text */
+}
+
+/* Individual menu items */
+.apexcharts-menu-item {
+  color: #fff !important;               /* white text */
+}
+
+.apexcharts-menu-item:hover {
+  background-color: #1f1f1f !important; /* hover effect */
+}
+
+// Import Bootstrap's source Sass files
+@import "../node_modules/bootstrap/scss/bootstrap";

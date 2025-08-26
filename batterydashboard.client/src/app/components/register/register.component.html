@@ -1,0 +1,72 @@
+<div class="register flex justify-center">
+  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+    <h1 class="text-3xl font-bold text-center text-purple-900 mb-6">iwell</h1>
+    <form (ngSubmit)="onSubmit()"  #registerForm="ngForm">
+
+      <div class="mb-4">
+        <input
+        name="username"
+          [(ngModel)]="registerData.UserName"
+          type="text"
+          placeholder="USER NAME"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+      </div>
+      <div class="mb-4 relative">
+        <input
+        name="useremail"
+          [(ngModel)]="registerData.UserEmail"
+          type="text"
+          placeholder="EMAIL ADDRESS"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+      </div>
+
+      <div class="mb-4 relative">
+        <input
+          name="password"
+          [(ngModel)]="registerData.Password"
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="PASSWORD"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+        <button
+          type="button"
+          (click)="togglePassword()"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+          <!-- Eye icon -->
+          <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="5"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          <!-- Eye slash -->
+          <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.05 10.05 0 012.258-3.675M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c1.034 0 2.023.162 2.958.463M19.542 7A10.05 10.05 0 0121.542 12c-1.274 4.057-5.065 7-9.542 7" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <select
+          name="role"
+          [(ngModel)]="registerData.Role"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+          <option [ngValue]="'User'">User</option>
+          <option [ngValue]="'BatteryOwner'">BatteryOwner</option>
+        </select>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="loading"
+        class="w-full py-3 text-black !text-black font-bold bg-lime-300 rounded-lg hover:bg-lime-400 transition" (click)="onSubmit()">
+        {{ loading ? 'Registering...' : 'Register' }}
+      </button>
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+      <div class="success text-green-600 mt-2" *ngIf="success">{{ success }}</div>
+    </form>
+
+    <p class="mt-4 text-center">Already have an account? <a routerLink="/login" class="text-purple-700 hover:underline">Login</a></p>
+  </div>
+</div>

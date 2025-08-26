@@ -1,0 +1,11 @@
+{
+  "/myiwell/api": {
+    "target": "https://api.acceptance.myiwell.nl/api",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/myiwell/api": ""
+    }
+  }
+}

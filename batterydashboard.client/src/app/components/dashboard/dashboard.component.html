@@ -1,0 +1,99 @@
+<div class="dashboard">
+  <header class="p-2 text-white flex justify-end">
+    <h3 class="username cursor-pointer" (click)="logout()">
+      {{ userName }} <span class="text-sm">(Logout)</span>
+    </h3>
+  </header>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+    </div>
+  </div>
+
+  <div class="container" [class.loading]="!isLoading">
+    <div class="top-row row mt-5 gx-5">
+      <div class="col-auto">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Battery Status</div>
+          <div class="card-body">
+            <span
+              [ngClass]="{
+                'text-success': batteryStatus.status ===  Availability.OK,
+                'text-warning': batteryStatus.status === Availability.PARTIAL,
+                'text-danger': batteryStatus.status === Availability.NOT_AVAILABLE
+              }"
+            >
+              <i *ngIf="batteryStatus.status === Availability.OK" class="bi bi-check-circle-fill me-1" ></i>
+              <i *ngIf="batteryStatus.status === Availability.PARTIAL" class="bi bi-exclamation-triangle-fill me-1" style="color: orange;"></i>
+              <i *ngIf="batteryStatus.status === Availability.NOT_AVAILABLE" class="bi bi-x-circle-fill me-1" style="color: red;"></i>
+              {{ batteryStatus.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Battery Power</div>
+          <div class="card-body">
+            <span class="h5">{{ batteryStatus.batteryPowerKw }} kW</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-auto" *ngIf="role == 'BatteryOwner'">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Battery Charging Capacity (Remanining)</div>
+          <div class="card-body">
+            <span class="h5">{{ batteryStatus.chargeCapacityRemainingKwh }} Kwh</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-auto" *ngIf="role == 'BatteryOwner'">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Battery Discharging Capacity (Remanining)</div>
+          <div class="card-body">
+            <span class="h5">{{ batteryStatus.dischargeCapacityRemainingKwh }} Kwh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-row row mt-5" >
+      <div class="col">
+        <div class="card shadow-sm chart-card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="fw-bold">Power</span>
+            <div class="d-flex gap-3 align-items-center">
+              <select
+                class="form-select form-select"
+                [(ngModel)]="selectedRange"
+                (change)="onRangeChange(selectedRange)"
+              >
+                <option value="1h">Last 1 hour</option>
+                <option value="24h">Last 24 hours</option>
+                <option value="60h">Last 60 hours</option>
+                <option value="7d">Last 7 days</option>
+                <option value="30d">Last 30 days</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <apx-chart
+              *ngIf="chartSeries.length"
+              [series]="chartSeries"
+              [chart]="chartOptions.chart"
+              [xaxis]="chartOptions.xaxis"
+              [stroke]="chartOptions.stroke"
+              [legend]="chartOptions.legend"
+              [tooltip]="chartOptions.tooltip"
+            >
+            </apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
