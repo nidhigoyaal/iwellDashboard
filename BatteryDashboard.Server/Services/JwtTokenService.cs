@@ -1,15 +1,19 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿using BatteryDashboard.Server.Extensions;
 using BatteryDashboard.Server.Interfaces;
 using BatteryDashboard.Server.Models;
+using Microsoft.ApplicationInsights;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace BatteryDashboard.Server.Services
 {
-    public class JwtTokenService(IConfiguration config) : IJwtTokenService
+    public class JwtTokenService(IConfiguration config, ILogger<JwtTokenService> logger, TelemetryClient telemetry) : IJwtTokenService
     {
         private readonly IConfiguration config = config;
+        private readonly ILogger<JwtTokenService> logger = logger;
+        private readonly TelemetryClient telemetry = telemetry;
 
         public string GenerateToken(User user)
         {
@@ -31,6 +35,13 @@ namespace BatteryDashboard.Server.Services
                  expires: DateTime.UtcNow.AddHours(2),
                  signingCredentials: creds
              );
+
+            logger.LogInformation("JWT token generated for user {Email}", user.UserEmail.Mask());
+            telemetry.TrackEvent("JwtTokenGenerated", new Dictionary<string, string>
+                {
+                    { "Email", user.UserEmail.Mask() },
+                    { "Expires", token.ValidTo.ToString("o") }
+                });
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

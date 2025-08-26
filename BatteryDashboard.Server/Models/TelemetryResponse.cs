@@ -2,12 +2,12 @@
 {
     public class TelemetryResponse
     {
-        public List<Series> Series { get; set; } = new();
+        public List<Series> Series { get; set; } = [];
     }
 
     public class Series
     {
-        public string Name { get; set; }
-        public List<List<object>> Data { get; set; } = new();
+        public string? Name { get; set; }
+        public List<List<object>> Data { get; set; } = [];
     }
 }
