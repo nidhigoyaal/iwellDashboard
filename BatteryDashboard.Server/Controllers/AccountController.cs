@@ -8,10 +8,10 @@ namespace BatteryDashboard.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController(IAccountService authService, ILogger<BatteryController> logger, TelemetryClient telemetry) : ControllerBase
+    public class AccountController(IAccountService authService, ILogger<AccountController> logger, TelemetryClient telemetry) : ControllerBase
     {
         private readonly IAccountService authService = authService;
-        private readonly ILogger<BatteryController> logger = logger;
+        private readonly ILogger<AccountController> logger = logger;
         private readonly TelemetryClient telemetry = telemetry;
 
         [HttpPost("register")]

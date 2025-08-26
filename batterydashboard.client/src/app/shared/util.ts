@@ -1,8 +1,7 @@
-export function minutesForPreset(preset: '1h'|'24h'|'7d'|'30d'): number {
-  switch (preset) {
-    case '1h': return 60;
-    case '24h': return 24 * 60;
-    case '7d': return 7 * 24 * 60;
-    case '30d': return 30 * 24 * 60;
-  }
+export function minutesForPreset(range: string): number {
+  const num = parseInt(range);
+  if (range.endsWith('h')) return -num * 60;
+    if (range.endsWith('d')) return -num * 24 * 60;
+    if (range.endsWith('m')) return -num;
+    return -3600;
 }

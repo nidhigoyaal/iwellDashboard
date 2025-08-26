@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { interval, Subscription } from 'rxjs';
 import { Availability, availabilityFromKw, BatteryStatus, NameMap } from 'src/app/shared/battery.models';
 import { Router } from '@angular/router';
+import { minutesForPreset } from '../../shared/util';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,7 +60,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loadTelemetry(showSpinner = true) {
     if(showSpinner) this.isLoading = true;
 
-    const offset = this.mapRangeToMinutes(this.selectedRange);
+    const offset = minutesForPreset(this.selectedRange);
     this.battery.getTelemetry(offset).subscribe({
       next: (res: any) => {
         this.chartSeries = res.series.map((s: any) => ({
@@ -83,14 +84,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     });
-  }
-
-  mapRangeToMinutes(range: string): number {
-    const num = parseInt(range);
-    if (range.endsWith('h')) return -num * 60;
-    if (range.endsWith('d')) return -num * 24 * 60;
-    if (range.endsWith('m')) return -num;
-    return -3600;
   }
 
   onRangeChange(range: string) {

@@ -9,9 +9,8 @@ using System.Text;
 
 namespace BatteryDashboard.Server.Services
 {
-    public class JwtTokenService(IConfiguration config, ILogger<JwtTokenService> logger, TelemetryClient telemetry) : IJwtTokenService
+    public class JwtTokenService(ILogger<JwtTokenService> logger, TelemetryClient telemetry) : IJwtTokenService
     {
-        private readonly IConfiguration config = config;
         private readonly ILogger<JwtTokenService> logger = logger;
         private readonly TelemetryClient telemetry = telemetry;
 
@@ -29,8 +28,8 @@ namespace BatteryDashboard.Server.Services
             };
 
             var token = new JwtSecurityToken(
-                 issuer: config["Jwt:Issuer"],
-                 audience: config["Jwt:Audience"],
+                 issuer: Config.Config.JwtIssuer,
+                 audience: Config.Config.JwtAudience,
                  claims: claims,
                  expires: DateTime.UtcNow.AddHours(2),
                  signingCredentials: creds
