@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/enviroment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Login } from '../Models/login.model';
@@ -23,7 +23,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(loginData: Login): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${environment.iwellApiUrl}/Account/login`, loginData)
+    return this.http.post<{ token: string }>(`${environment.authUrl}/Account/login`, loginData)
       .pipe(tap(res => {
         if (res?.token) {
           localStorage.setItem(this.tokenKey, res.token);
@@ -34,7 +34,7 @@ export class AuthService {
 
   register(registerData: Register) {
     console.log(registerData)
-    return this.http.post(`${environment.iwellApiUrl}/Account/register`, registerData );
+    return this.http.post(`${environment.authUrl}/Account/register`, registerData );
   }
 
   logout() {
