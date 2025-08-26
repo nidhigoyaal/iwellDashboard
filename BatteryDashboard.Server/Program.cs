@@ -21,7 +21,6 @@ var client = new SecretClient(new Uri($"https://{keyVaultName}.vault.azure.net/"
 var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
 await Config.Load(builder.Configuration);
 
-// Add services
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -47,7 +46,6 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
-// JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = "JwtBearer";

@@ -31,14 +31,12 @@ namespace BatteryDashboard.Server.Controllers
                 var token = await authService.Login(login);
                 return Ok(new { token });
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
-                // You can log the exception here
                 return Unauthorized();
             }
             catch (Exception)
             {
-                // Handle other potential errors gracefully
                 return StatusCode(500, "An unexpected error occurred.");
             }
         }
