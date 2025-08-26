@@ -25,7 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     var sqlBuilder = new SqlConnectionStringBuilder(
-        builder.Configuration.GetConnectionString("SqlConnectionString")
+        builder.Configuration.GetConnectionString("DefaultConnection")
     )
     {
         Authentication = SqlAuthenticationMethod.ActiveDirectoryDefault
@@ -111,6 +111,12 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();

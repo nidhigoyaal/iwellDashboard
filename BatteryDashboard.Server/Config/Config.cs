@@ -21,7 +21,7 @@ namespace BatteryDashboard.Server.Config
             KeyVaultSecret iWellApi = await client.GetSecretAsync("IWellApi");
             IWellApi = iWellApi.Value;
 
-            KeyVaultSecret sqlConnectionString = await client.GetSecretAsync("SqlConnectionString");
+            KeyVaultSecret sqlConnectionString = await client.GetSecretAsync("DefaultConnection");
             SqlConnectionString = sqlConnectionString.Value;
 
             KeyVaultSecret jwtKey = await client.GetSecretAsync("Jwt--Key");
