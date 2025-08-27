@@ -54,7 +54,7 @@ namespace BatteryDashboard.Server.Repository
         {
             try
             {
-                return await context.Users.AsNoTracking().AnyAsync(u => u.UserEmail.Equals(email, StringComparison.CurrentCultureIgnoreCase));
+                return await context.Users.AsNoTracking().AnyAsync(u => u.UserEmail == email);
             }
             catch(Exception ex)
             {
