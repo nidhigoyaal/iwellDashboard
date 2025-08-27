@@ -20,6 +20,14 @@ namespace BatteryDashboard.Server.Controllers
             PropertyNameCaseInsensitive = true
         };
 
+        /// <summary>
+        /// Gets the current status of a battery device.
+        /// </summary>
+        /// <param name="deviceId">The unique identifier of the battery device.</param>
+        /// <returns>The battery status as JSON.</returns>
+        /// <response code="200">Successfully retrieved battery status.</response>
+        /// <response code="401">Unauthorized access.</response>
+        /// <response code="500">Error fetching battery status from the external service.</response>
         [HttpGet("{deviceId}/status"), Authorize]
         public async Task<IActionResult> GetBatteryStatus(string deviceId)
         {
@@ -49,6 +57,15 @@ namespace BatteryDashboard.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets telemetry data for a battery device.
+        /// </summary>
+        /// <param name="deviceId">The unique identifier of the battery device.</param>
+        /// <param name="offsetMinutes">The time offset in minutes to fetch historical telemetry.</param>
+        /// <returns>Filtered telemetry series for BatteryPowerW and GridPowerW.</returns>
+        /// <response code="200">Successfully retrieved telemetry data.</response>
+        /// <response code="401">Unauthorized access.</response>
+        /// <response code="500">Error fetching telemetry from the external service.</response>
         [HttpGet("{deviceId}/telemetry"), Authorize]
         public async Task<IActionResult> GetTelemetry(string deviceId, [FromQuery] int offsetMinutes)
         {

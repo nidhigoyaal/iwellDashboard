@@ -14,6 +14,13 @@ namespace BatteryDashboard.Server.Controllers
         private readonly ILogger<AccountController> logger = logger;
         private readonly TelemetryClient telemetry = telemetry;
 
+        /// <summary>
+        /// Registers a new user account.
+        /// </summary>
+        /// <param name="register">The registration details including email and password.</param>
+        /// <returns>An authentication token if registration is successful.</returns>
+        /// <response code="200">Registration successful, returns a JWT token.</response>
+        /// <response code="409">Registration failed, email already exists.</response>
         [HttpPost("register")]
         public async Task<IActionResult> Register(Register register)
         {
@@ -33,6 +40,14 @@ namespace BatteryDashboard.Server.Controllers
             return Ok(new { token });
         }
 
+        /// <summary>
+        /// Logs in a user with provided credentials.
+        /// </summary>
+        /// <param name="login">The login details including email and password.</param>
+        /// <returns>An authentication token if login is successful.</returns>
+        /// <response code="200">Login successful, returns a JWT token.</response>
+        /// <response code="401">Login failed, invalid email or password.</response>
+        /// <response code="500">An unexpected server error occurred.</response>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Login login)
         {
